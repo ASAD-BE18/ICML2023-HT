@@ -43,14 +43,25 @@ def read_deepfake_dataset(batchsize, data_dir):
                                     transforms.ToTensor(),
                                     transforms.Normalize(mean=[0.4914, 0.4822, 0.4465],std=[0.2023, 0.1994, 0.2010])])
 
-    data_train = DeepfakeDataset(data_dir=os.path.join(data_dir, 'train'), transform=transform_train)
-    data_test = DeepfakeDataset(data_dir=os.path.join(data_dir, 'test'), transform=transform_test)
+    # Load the full dataset
+    full_dataset = DeepfakeDataset(data_dir=data_dir, transform=None)
 
-    data_loader_train = DataLoader(dataset=data_train,
+    # Calculate split sizes
+    train_size = int(0.8 * len(full_dataset))
+    test_size = len(full_dataset) - train_size
+
+    # Split the dataset
+    train_dataset, test_dataset = random_split(full_dataset, [train_size, test_size])
+
+    # Apply transforms to the split datasets
+    train_dataset.dataset.transform = transform_train
+    test_dataset.dataset.transform = transform_test
+
+    data_loader_train = DataLoader(dataset=train_dataset,
                                    batch_size=batchsize,
                                    shuffle=True,
                                    pin_memory=True)
-    data_loader_test = DataLoader(dataset=data_test,
+    data_loader_test = DataLoader(dataset=test_dataset,
                                   batch_size=batchsize,
                                   shuffle=False,
                                   pin_memory=True)
