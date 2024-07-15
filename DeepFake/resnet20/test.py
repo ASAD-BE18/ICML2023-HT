@@ -11,7 +11,7 @@ from tqdm import tqdm
 from torch import nn
 
 from resnet import ResNet20
-from read_data import read_cifar10
+from read_data import read_deepfake_dataset
 
 def test_loop(dataloader, model, loss_fn, device):
     model.eval()
@@ -44,11 +44,11 @@ if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print('Device:', device)
     save_dir = './saved'
-    data_dir = './Deepfake_dataset'
+    data_dir = '../Deepfake_dataset'
     batchsize = 128
 
     
-    _, test_generator = read_cifar10(batchsize,data_dir)
+    _, test_generator = read_deepfake_dataset(batchsize,data_dir)
     
     model = ResNet20().to(device)
     model.load_state_dict(torch.load(os.path.join(save_dir, 'acc_model.pth')))
