@@ -1,5 +1,5 @@
 from torchvision import transforms
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader, Dataset, random_split
 import os
 from PIL import Image
 
