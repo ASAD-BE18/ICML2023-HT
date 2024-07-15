@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from torch import nn
 
 from resnet import ResNet20
-from read_data import read_cifar10
+from read_data import read_deepfake_dataset
 
 torch.manual_seed(0)
 random.seed(0)
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print('Device:', device)
     save_dir = './saved'
-    data_dir = '../data'
+    data_dir = './Deepfake_dataset'
     batchsize = 128
     n_epochs = 200
     Lr = 0.1
