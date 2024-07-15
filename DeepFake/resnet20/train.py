@@ -84,7 +84,7 @@ if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print('Device:', device)
     save_dir = './saved'
-    data_dir = './Deepfake_dataset'
+    data_dir = '../Deepfake_dataset'
     batchsize = 128
     n_epochs = 200
     Lr = 0.1
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
     
-    train_generator,test_generator = read_cifar10(batchsize,data_dir)
+    train_generator,test_generator = read_deepfake_dataset(batchsize,data_dir)
     
     model = ResNet20().to(device)
     print(model)
